@@ -1,8 +1,8 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg nav-class">
+<nav class="navbar navbar-expand-lg sticky-top nav-class">
 
     <a class="navbar-brand nav-logo-class" href="{% url 'home' %}">
-        <h3><img src="{% static 'images/logo.png'%}" alt="BIZ HUNT" class="image_class"></h3>
+        <h3><img src="{% static 'images/arcadia.png'%}" alt="BIZ HUNT" class="image_class"></h3>
     </a>
 
     <button class="custom-toggler navbar-toggler p-0" type="button" data-toggle="collapse" data-target="#nav_list" aria-controls="nav_list" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="nav_list">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link nav-link-class" href="{% url 'home' %}">Home <span class="sr-only nav_list_class">(current)</span></a>
+                <a class="nav-link nav-link-class" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link nav-link-class" href="{% url 'instructions' %}">Instructions</a>

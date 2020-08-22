@@ -7,21 +7,32 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid banner" style="background: url('{% static 'images/banner.jpg' %}')">
-    {% include 'messages.html'%}
-        <div class="heading-class center-mx">
-            <p>Welcome to BizHunt</p><br>
-            {% if request.user.is_authenticated%}
-                <a href="{% url 'questions' %}"><button class="btn btn-white btn-class center-mx">Questions</button></a>
-            {% else %}
-                <a href="{% url 'user_login' %}"><button class="btn btn-white btn-class center-mx">Login</button></a>
-        {% endif %}
-        </div>
-    </div>
-    <div class="container-fluid description">
-        <h3 >Description</h3>
-        <p class="description_para">
-            The game involves an online treasure hunt where the participants will have to hunt for the answers and clues in order to reach to the end, thus unveiling the treasure. Participation can be done individually or in teams consisting of 2-4 members. Each clue will lead to another and can be solved by using the knowledge of the world of business. In order to move further the individual/teams will have to answer the questions as they are displayed. Each question will have equal points and the progress of each participant will be traced by our leaderboard. The participant gaining highest points by completing the trivia in the lowest time will win the hunt.
-        </p>
-    </div>
+	<section id="home-body">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7 order-1 order-md-2 d-flex align-items-center justify-content-center">
+					<div class="container image-box">
+						<img src="{% static 'images/banner-img.svg' %}">
+					</div>
+				</div>	
+				<div class="col-md-5 order-2 order-md-1 d-flex align-items-center justify-content-center">
+					<div class="container description-box">
+						<h1 class="heading">Arcadia</h1>
+						<div class="mt-0 mb-3 underline"></div>
+						<p class="sub-heading">
+							An online treasure hunt where the participants will have to hunt for the answers and clues in order to reach to the end, thus unveiling the treasure.
+						</p>
+						{% if request.user.is_authenticated%}
+							<a href="{% url 'questions' %}">
+								<button class="btn crack-button">Crack the code</button>
+						{% else %}
+							<a href="{% url 'user_login' %}">
+								<button class="btn crack-button">Login</button>
+							</a>
+						{% endif %}
+						</div>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}

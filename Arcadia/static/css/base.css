@@ -1,39 +1,38 @@
 body {
     font-family: 'Montserrat Alternates', sans-serif;
-    background-color: #2D2D2A;
+    background-color: #b80b22;
 }
-
+ 
 .nav-class {
-    background-color: #E6E8E6;
+    background-color: #b80b22;
     padding: 0px 16px 0px 16px;
 }
 
 .custom-toggler.navbar-toggler {
-    border: 2px solid #1F1E1E;
+    border: 2px solid #f5dd04;
 }
 
 .custom-toggler .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
-
-.nav-logo-class {
-    color: #1F1E1E;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(245, 221, 4)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
 .nav-link-class {
-    color: #1F1E1E;
+	font-size: large;
+    color: #f5dd04;
     text-align: center;
+	margin: 0px 16px 0px 16px;
 }
 
 .nav-link-class:hover {
-    background-color: #1F1E1E;
-    color: #E6E8E6;
-    transition-duration: 1s;
+    background-color: #f5dd04;
+	color: #b80b22;
+	border-radius: 20px;
+	transition-duration: 1s;
 }
 
 .footer {
-    background-color: #E6E8E6;
-    color: #2D2D2A;
+    background-color: white;
+    color: #b80b22;
     text-align: center;
 }
 .center-x {

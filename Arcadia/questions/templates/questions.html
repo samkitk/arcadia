@@ -8,24 +8,26 @@
 
 
 {% block content %}
-    {% include 'messages.html' %}
-    <div class="container-fluid" style="min-height: 100vh">
+    <div class="container shadow mx-auto my-5 p-0 question-box">
+		<div class="box-heading pl-5 py-1 mb-3">
+			Question
+		</div>
         {% if question.Question_Text %}
-            <div class='container-fluid question_class'>
+            <div class='container-fluid my-5 question-class'>
                 {{question.Question_Text}}
             </div>
         {%endif%}
         {% if question.Question_Image %}
-            <div class='container-fluid question_class'>
-            <img src="{{question.Question_Image.url}}" alt="img" class="img_class">
+            <div class='container-fluid d-flex justify-content-center question-class'>
+            <img src="{{question.Question_Image.url}}" alt="img" class="rounded img-class">
             </div>
         {%endif%}
         
-        <div class="container-fluid" class="form_class">
-            <form action="{% url 'questions'%}" method="POST">
+        <div class="container-fluid d-flex justify-content-center align-items-center mt-5 p-3 form-class">
+            <form action="{% url 'questions'%}" class="m-0" method="POST">
                 {% csrf_token %}
-                <input type="text" name='answer' autocomplete="off" required class="field centerx" placeholder="Answer"> <br>
-                <button type="submit" class="btn btn-light button centerx">Submit</button>
+                <input type="text" name='answer' autocomplete="off" required class="field mx-auto" placeholder="Answer"><br><br>
+                <button type="submit" class="btn mx-auto btn-light button">Submit</button>
             </form>
         </div>
     </div>

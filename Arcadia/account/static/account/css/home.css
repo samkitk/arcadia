@@ -1,61 +1,33 @@
-.banner {
-    min-height: 80vh;
-    padding: 30vh 0px 30px 0px;
+body {
+	background-color: #b80b22;
 }
 
-.heading-class {
-    color: #E6E8E6;
-    font-size: 50px;
+.image-box {
+	width: 100%;
 }
 
-@media screen and (max-width: 993px) {
-    .banner {
-        min-height: 100vh;
-    }
-    .heading-class {
-        color: #E6E8E6;
-        font-size: 35px;
-    }
+.heading {
+	color: #f5dd04;
+	font-size: 72px;
 }
 
-.btn-class {
-    border: 2px solid #E6E8E6
+.underline {
+	width: 300px;
+	border: 2px solid #f5dd04;
 }
 
-.btn-class:hover {
-    background-color: #2D2D2A;
-    color: #E6E8E6;
-    transition-duration: 1s;
+.sub-heading {
+	color: antiquewhite;
+	font-style: italic;
 }
 
-.description {
-    background-color: #E6E8E6;
-    color: #2D2D2A;
-    text-align: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+.crack-button {
+	color: #b80b22;
+	background-color: #f5dd04;
+	border: 2px solid #f5dd04;
 }
 
-@media screen and (min-width: 500px) {
-    .description_para {
-        max-width: 70%;
-        margin-left: 15%;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .description_para {
-        max-width: 95%;
-        margin-left: 2%;
-    }
-}
-
-.footer {
-    background-color: #2D2D2A;
-    color: #E6E8E6;
-}
-
-.footer a
-{
-    color: #E6E8E6;
+.crack-button:hover {
+	color: #f5dd04;
+	background-color: #b80b22;
 }
