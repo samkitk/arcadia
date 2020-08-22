@@ -20,7 +20,7 @@ from env import *
 
 # EMAIL_HOST = 'smtp.sendgrid.net'
 # EMAIL_HOST_USER = 'samkit'
-# EMAIL_HOST_PASSWORD = 'Abcd1234!!'
+# EMAIL_HOST_PASSWORD = 'changedpassword!!'
 # EMAIL_USE_TLS = True
 # EMAIL_PORT = 587
 
@@ -36,7 +36,7 @@ class HomePageView(TemplateView):
 def send_activation_email(request, user, email):
 
     current_site = get_current_site(request)
-    subject = 'Brand Hunt-Activate your account'
+    subject = 'Arcadia - Activate your Account'
     context = {'user': user, 'domain': current_site.domain,
                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                'token': generate_token.make_token(user)}
@@ -45,6 +45,7 @@ def send_activation_email(request, user, email):
     plain_message = strip_tags(message)
 
     send_mail(subject, plain_message, EMAIL_HOST_USER, [email], html_message=message)
+    print("Mail Sent")
     
 
 class RegisterView(TemplateView):
