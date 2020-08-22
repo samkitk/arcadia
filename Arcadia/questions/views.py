@@ -10,10 +10,7 @@ from django.utils import timezone
 
 from account.models import Account
 from .models import Question
-from env import *
-
-# Create your views here.
-
+from Arcadia.settings import START_TIME, END_TIME, MAX_QUESTIONS
 
 def only_letters(answer):
     match = re.match("^[a-z]*$", answer)
@@ -25,7 +22,7 @@ class QuestionView(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         current_time = datetime.now()
 
-        if not START_TIME <= current_time <= STOP_TIME:
+        if not START_TIME <= current_time <= END_TIME:
             messages.error(request, 'Biz-hunt is closed')
             return redirect('home')
 
@@ -40,7 +37,7 @@ class QuestionView(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         current_time = datetime.now()
 
-        if not START_TIME <= current_time <= STOP_TIME:
+        if not START_TIME <= current_time <= END_TIME:
             messages.error(request, 'Biz-hunt is closed')
             return redirect('home')
 

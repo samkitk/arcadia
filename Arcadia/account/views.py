@@ -14,15 +14,8 @@ from django.db.models import Q
 from .forms import LoginForm, RegisterForm
 from .models import Account, AccountManager
 from .utils import generate_token
-from env import *
-# from BrandHunt.settings import EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_USE_TLS, EMAIL_PORT
-# Create your views here.
+from Arcadia.settings import EMAIL_HOST_USER
 
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'samkit'
-# EMAIL_HOST_PASSWORD = 'changedpassword!!'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
 
 account_manager = AccountManager()
 
