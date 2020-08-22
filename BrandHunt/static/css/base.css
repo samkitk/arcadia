@@ -1,0 +1,84 @@
+body {
+    font-family: 'Montserrat Alternates', sans-serif;
+    background-color: #2D2D2A;
+}
+
+.nav-class {
+    background-color: #E6E8E6;
+    padding: 0px 16px 0px 16px;
+}
+
+.custom-toggler.navbar-toggler {
+    border: 2px solid #1F1E1E;
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.nav-logo-class {
+    color: #1F1E1E;
+}
+
+.nav-link-class {
+    color: #1F1E1E;
+    text-align: center;
+}
+
+.nav-link-class:hover {
+    background-color: #1F1E1E;
+    color: #E6E8E6;
+    transition-duration: 1s;
+}
+
+.footer {
+    background-color: #E6E8E6;
+    color: #2D2D2A;
+    text-align: center;
+}
+.center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.center-y {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.center-xy {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center-mx {
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.center-my {
+    margin-top: 50%;
+    transform: translateY(-50%);
+}
+
+.center-mxy {
+    margin-left: 50%;
+    margin-top: 50%;
+    transform: translateX(-50%);
+    transform: translateY(-50%);
+}
+
+.image_class {
+    max-height: 40px;
+    max-width: 120px;
+    margin-top: 8%;
+}
+
+.footer a
+{
+    color: #2D2D2A;
+}

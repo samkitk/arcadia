@@ -1,0 +1,20 @@
+.box {
+    max-width: 80%;
+    text-align: left;
+}
+
+ol li {
+    color: #e6e8e6;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 993px) {
+    .box {
+        margin: 0px;
+        min-width: 95%;
+        transform: translateX(0);
+    }
+    ol li {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,32 @@
+body {
+    background-color: #2D2D2A;
+    min-height: 100%;
+    text-align: center;
+}
+
+.table {
+    max-width: 80%;
+    margin-top: 70px;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .table {
+        max-width: 95%;
+    }
+}
+
+.row_even {
+    background-color: #E6E8E6;
+    color: #2D2D2A;
+}
+
+.row_odd {
+    background-color: white;
+    color: #2D2D2A;
+}
+
+td {
+    word-wrap: break-word;
+    max-width: 200px;
+}

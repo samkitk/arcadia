@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'questions/css/questions.css'%}">
+    <title>Questions</title>
+{% endblock %}
+
+
+{% block content %}
+    {% include 'messages.html' %}
+    <div class="container-fluid" style="min-height: 100vh">
+        {% if question.Question_Text %}
+            <div class='container-fluid question_class'>
+                {{question.Question_Text}}
+            </div>
+        {%endif%}
+        {% if question.Question_Image %}
+            <div class='container-fluid question_class'>
+            <img src="{{question.Question_Image.url}}" alt="img" class="img_class">
+            </div>
+        {%endif%}
+        
+        <div class="container-fluid" class="form_class">
+            <form action="{% url 'questions'%}" method="POST">
+                {% csrf_token %}
+                <input type="text" name='answer' autocomplete="off" required class="field centerx" placeholder="Answer"> <br>
+                <button type="submit" class="btn btn-light button centerx">Submit</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

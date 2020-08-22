@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'libs/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/base.css'%}"> {% block head%} {% endblock %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
+    <script type="text/javascript" src="{% static 'libs/bootstrap.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'libs/jquery.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'libs/bootstrap.bundle.min.js'%}"></script>
+</head>
+
+<body>
+    {% include 'navbar.html' %} {% block content %} {% endblock %}
+    </div>
+    {% include 'footer.html'%}
+</body>
+
+</html>
