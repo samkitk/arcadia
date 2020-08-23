@@ -8,28 +8,29 @@
 
 
 {% block content %}
-    <div class="container shadow mx-auto my-5 p-0 question-box">
-		<div class="box-heading pl-5 py-1 mb-3">
-			Question
-		</div>
-        {% if question.Question_Text %}
+	<section id="question-body" class="p-2">
+		<div class="container shadow-lg mx-auto my-5 p-0 question-box">
+			<div class="box-heading d-flex justify-content-center py-1 mb-3">
+				Question
+			</div>
+			{% if question.Question_Text %}
             <div class='container-fluid my-5 question-class'>
-                {{question.Question_Text}}
+				{{question.Question_Text}}
             </div>
-        {%endif%}
-        {% if question.Question_Image %}
+			{%endif%}
+			{% if question.Question_Image %}
             <div class='container-fluid d-flex justify-content-center question-class'>
-            <img src="{{question.Question_Image.url}}" alt="img" class="rounded img-class">
+				<img src="{{question.Question_Image.url}}" alt="img" class="rounded img-class">
             </div>
-        {%endif%}
-        
-        <div class="container-fluid d-flex justify-content-center align-items-center mt-5 p-3 form-class">
-            <form action="{% url 'questions'%}" class="m-0" method="POST">
-                {% csrf_token %}
-                <input type="text" name='answer' autocomplete="off" required class="field mx-auto" placeholder="Answer"><br><br>
-                <button type="submit" class="btn mx-auto btn-light button">Submit</button>
-            </form>
-        </div>
-    </div>
-
+			{%endif%}
+			
+			<div class="container-fluid  mt-5 p-3 form-class">
+				<form action="{% url 'questions'%}" class="m-0 form-inline d-flex justify-content-center align-items-center" method="POST">
+					{% csrf_token %}
+					<input type="text" name='answer' autocomplete="off" required class="form-control field m-2" placeholder="Answer">
+					<button type="submit" class="btn m-2 button">Submit</button>
+				</form>
+			</div>
+		</div>
+	</section>
 {% endblock %}

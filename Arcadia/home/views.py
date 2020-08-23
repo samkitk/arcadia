@@ -11,9 +11,9 @@ def home_page_view(request, *args, **kwargs):
 def leaderboard_view(request, *args, **kwargs):
     users = Account.objects.filter(is_superuser=False).order_by('-current_que','last_ans_time')
     context = {'users': users}
-    return render(request, 'leaderboard.html', context)
+    return render(request, 'home/leaderboard.html', context)
 
 
 def instruction_view(request, *args, **kwargs):
     context = {}
-    return render(request, 'instructions.html', context)
+    return render(request, 'home/instructions.html', context)
