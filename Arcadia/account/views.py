@@ -1,50 +1,46 @@
+import os
+from decouple import config
+
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View
+from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.contrib import messages
 from django.db.models import Q
 
 from .forms import LoginForm, RegisterForm
-from .models import Account, AccountManager
+from .models import Account
 from .utils import generate_token
-from Arcadia.settings import EMAIL_HOST_USER
+# Create your views here.
 
 
-account_manager = AccountManager()
-
-class HomePageView(TemplateView):
-
-    def get(self, request, *args, **kwargs):
-        context = {}
-        return render(request, "home.html", context)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 
 
+# Generating token and sending mail for activating account
 def send_activation_email(request, user, email):
-
     current_site = get_current_site(request)
-    subject = 'Arcadia - Activate your Account'
+    subject = 'CEL-Activate your account'
     context = {'user': user, 'domain': current_site.domain,
                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                'token': generate_token.make_token(user)}
-    message = render_to_string('activate.html', context)
-
+    message = render_to_string('account/activate_link.html', context)
     plain_message = strip_tags(message)
 
-    send_mail(subject, plain_message, EMAIL_HOST_USER, [email], html_message=message)
-    print("Mail Sent")
-    
+    send_mail(subject, plain_message, EMAIL_HOST_USER,
+              [email], html_message=message)
 
-class RegisterView(TemplateView):
+
+class RegisterView(View):
     """
         Register View
-
         Renders registration page, verifies new user.
         On verification sends activation link.
     """
@@ -52,46 +48,40 @@ class RegisterView(TemplateView):
     def get(self, request, *args, **kwargs):
         form = RegisterForm()
         context = {'form': form}
-        return render(request, 'register.html', context)
+        return render(request, 'account/register.html', context)
 
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
-        email = request.POST.get('email')
         fullname = request.POST.get('fullname')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
 
         try:
-            user = Account.objects.get(Q(username=username) | Q(email=email))
+            user = Account.objects.get(
+                Q(username=username) | Q(email=email))
         except Exception as identifier:
             user = None
 
         if user:
             messages.error(request, 'Username/Email already exists!!')
             return redirect('register')
-        if not email.endswith('ahduni.edu.in'):
-            messages.error(request, 'Only ahduni emails allowed!!')
-            return redirect('register')
-        if password1 != password2:
-            messages.error(request, 'Passwords didn\'t match!!')
-            return redirect('register')
 
-        user = Account(username=username, email=email,
-                       fullname=fullname, password=password1)
-        user.set_password(password1)
+        user = Account(username=username, email=email, 
+                       password=password, fullname=fullname)
+        user.set_password(password)
         user.save()
 
         # Email verification is done by encoding user's primary key and generating a token
         send_activation_email(request, user, email)
 
-        messages.info(request, 'Verification link sent. Check your email! Please wait for 5-7 minutes and check for SPAM/Promotions Folder in Gmail!')
-        return redirect('user_login')
+        messages.info(request,
+                      'Verification link sent. Check your email! Please wait for 5-7 minutes and check for SPAM/Promotions Folder in Gmail!')
+        return redirect('login')
 
 
-class LoginView(TemplateView):
+class LoginView(View):
     """
         Login View
-
         Renders login page and authenticates user.
     """
 
@@ -101,7 +91,7 @@ class LoginView(TemplateView):
 
         form = LoginForm()
         context = {'form': form}
-        return render(request, 'login.html', context)
+        return render(request, 'account/login.html', context)
 
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
@@ -114,20 +104,19 @@ class LoginView(TemplateView):
 
         if user:
             if not user.is_activated:
-                messages.error(request, 'Account not activated.')
-                return redirect('user_login')
+                messages.error(request, 'Account not activated. Contact administrator')
+                return redirect('login')
             login(request, user)
             messages.info(request, 'Logged in successfully.')
             return redirect('home')
         else:
             messages.error(request, 'Invalid Username or Password.')
-            return redirect('user_login')
+            return redirect('login')
 
 
-class ActivateView(View):
+class ActivateAccountView(View):
     """
         Email Activation.
-
         Verification by decoding primary key and checking token
     """
 
@@ -139,30 +128,150 @@ class ActivateView(View):
             user = None
 
         if user is None:
-            messages.info(request, 'Verification failed!!')
+            messages.error(request, 'Verification failed!!')
         else:
             if generate_token.check_token(user, token):
                 user.is_activated = True
                 user.save()
                 messages.info(request, 'Link verified successfully!!')
             else:
-                messages.info(request, 'Verification failed!!')
-        return redirect('user_login')
+                messages.error(request, 'Verification failed!!')
+        return redirect('login')
+
+
+class ForgotPasswordView(View):
+    """
+        Forgot password view
+        Getting email of the user and sending reset link.
+    """
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return render(request, 'account/reset_email.html', context)
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        try:
+            user = Account.objects.get(email=email)
+        except Exception as identifier:
+            user = None
+
+        if user is None:
+            messages.error(request, 'Enter valid email address')
+            return redirect('forgot_password')
+        else:
+            current_site = get_current_site(request)
+            subject = 'Programming Club-Reset Password'
+
+            context = {'user': user, 'domain': current_site.domain,
+                       'encoded_username': urlsafe_base64_encode(force_bytes(user.username)),
+                       'token': generate_token.make_token(user)}
+            message = render_to_string(
+                'account/reset_link.html', context)
+            plain_message = strip_tags(message)
+
+            send_mail(subject, plain_message, EMAIL_HOST_USER,
+                      [user.email], html_message=message)
+            messages.info(request,
+                          'Reset link sent. Check your email! Please wait for 5-7 minutes and check for SPAM/Promotions Folder in Gmail!')
+            return redirect('login')
+
+
+class PasswordSetterView(View):
+    """
+        Resetting new password
+        Getting new password and updating it.
+    """
+
+    def get(self, request, username64, token, *args, **kwargs):
+        try:
+            username = force_text(urlsafe_base64_decode(username64))
+            user = Account.objects.get(username=username)
+        except Exception as identifier:
+            user = None
+
+        if user is None:
+            messages.error(request, 'Link verification failed1!!')
+            return redirect('get_email')
+        else:
+            if generate_token.check_token(user, token):
+                context = {'username': user.username}
+                return render(request, 'account/new_password.html', context)
+            else:
+                messages.error(request, 'Link verification failed!!')
+                return redirect('get_email')
+
+    def post(self, request, *args, **kwargs):
+        password = request.POST.get('password')
+        username = request.POST.get('username')
+
+        user = Account.objects.get(username=username)
+        user.set_password(password)
+        user.save()
+
+        messages.info(request, 'Password changed successfully!!')
+        return redirect('login')
+
+
+# class ProfileView(LoginRequiredMixin, View):
+#     """
+#         View for profile page
+#         Details of the users are displayed.
+#         User can update password and CF id.
+#     """
+#     login_url = '/login/'
+#     redirect_field_name = 'profile'
+
+#     def get(self, request, *args, **kwargs):
+#         context = {}
+#         return render(request, 'account/profile/profile.html', context)
+
+#     def post(self, request, *agrs, **kwargs):
+#         field = request.POST.get('field')
+
+#         if field == 'password':
+#             old_password = request.POST.get('old')
+#             try:
+#                 user = authenticate(
+#                     request, username=request.user.username, password=old_password)
+#             except Exception as identifier:
+#                 user = None
+
+#             if user is None:
+#                 messages.error(request, 'Password couldn\'t be verified')
+#             else:
+#                 password1 = request.POST.get('password1')
+#                 password2 = request.POST.get('password2')
+
+#                 if password1 == password2:
+#                     request.user.set_password(password2)
+#                     request.user.save()
+#                     messages.info(request, 'Password changed successfully')
+#                 else:
+#                     messages.error(request, 'New Password didn\'t match')
+
+#             return redirect('profile')
+
+#         else:
+#             password = request.POST.get('password')
+#             try:
+#                 user = authenticate(
+#                     request, username=request.user.username, password=password)
+#             except Exception as identifier:
+#                 user = None
+
+#             if user is None:
+#                 messages.error(request, 'Password couldn\'t be verified')
+#             else:
+#                 request.user.cf_username = request.POST.get('cf_username')
+#                 request.user.save()
+#                 messages.info(request, 'Username updated successfully')
+
+#             return redirect('profile')
 
 
 @login_required
 def logout_view(request, *args, **kwargs):
     logout(request)
     messages.info(request, 'Logged out successfully')
-    return redirect('user_login')
-
-
-def leaderboard_view(request, *args, **kwargs):
-    users = Account.objects.filter(is_superuser=False).order_by('-current_que','last_ans_time')
-    context = {'users': users}
-    return render(request, 'leaderboard.html', context)
-
-
-def instruction_view(request, *args, **kwargs):
-    context = {}
-    return render(request, 'instructions.html', context)
+    return redirect('login')

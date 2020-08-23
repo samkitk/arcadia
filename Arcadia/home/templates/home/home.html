@@ -3,7 +3,7 @@
 
 {% block head %}
     <title>Home Page</title>
-    <link rel="stylesheet" href="{% static 'account/css/home.css'%}">
+    <link rel="stylesheet" href="{% static 'home/css/home.css'%}">
 {% endblock %}
 
 {% block content %}
@@ -25,8 +25,9 @@
 						{% if request.user.is_authenticated%}
 							<a href="{% url 'questions' %}">
 								<button class="btn crack-button">Crack the code</button>
+							</a>
 						{% else %}
-							<a href="{% url 'user_login' %}">
+							<a href="{% url 'login' %}">
 								<button class="btn crack-button">Login</button>
 							</a>
 						{% endif %}

@@ -2,20 +2,27 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-# Create your models here.
+
 
 DEFAULT_TIME = datetime(2020, 6, 13, 16, 0, 0)
+
 
 class AccountManager(BaseUserManager):
 
     def create_user(self, username, email, password=None,
-                    fullname=None, is_active=True,
+                    last_ans_time=DEFAULT_TIME, points=0, is_active=True,
                     staff=False, is_superuser=False, is_activated=False):
-    
+        if not username:
+            raise ValueError('Users must have a unique username.')
+        if not email:
+            raise ValueError('Users must have an email.')
+        if not password:
+            raise ValueError('Users must have a password.')
+
         user = self.model(
-			username=username,
-            fullname=fullname,
-            email=self.normalize_email(email),   
+            username=username,
+            email=self.normalize_email(email),
+            # fullname=fullname
         )
 
         user.set_password(password)
@@ -26,26 +33,29 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_staffuser(self, username, email, password=None):
+    def create_staffuser(self, username, email, fullname=None, password=None):
         user = self.create_user(
             username,
             email,
             password=password,
+            # fullname=fullname,
             staff=True,
             is_activated=True
         )
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, username, email, fullname=None, password=None):
         user = self.create_user(
             username,
             email,
             password=password,
+            # fullname=fullname,
             staff=True,
             is_superuser=True,
             is_activated=True
         )
         return user
+
 
 class Account(AbstractBaseUser):
     # custom_fields
@@ -61,7 +71,7 @@ class Account(AbstractBaseUser):
     is_activated = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email',]
 
     objects = AccountManager()
 
@@ -77,6 +87,13 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return self.is_superuser
+
+    @property
+    def is_winner(self):
+        if(self.challenged_won.count() > 0):
+            return True
+        else: 
+            return False
 
 	# We can add custom methods as per requirements
 

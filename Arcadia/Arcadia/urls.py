@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('account.urls')),
 	path('', include('questions.urls')),
+	path('', include('home.urls'))
 ]
 
 if settings.DEBUG:

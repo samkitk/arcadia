@@ -3,36 +3,32 @@ from django import forms
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Username', widget=forms.TextInput(
-        attrs={'class': 'fields', 'autocomplete': 'off',
+        attrs={'class': 'form-control fields', 'autocomplete': 'off',
                'placeholder': 'Username'}
     ))
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(
-        attrs={'class': 'fields', 'autocomplete': 'off', 'placeholder': 'Email'}
-    ))
-    fullname = forms.CharField(label='Full name', widget=forms.TextInput(
-        attrs={'class': 'fields', 'autocomplete': 'off',
+    fullname = forms.CharField(label='Fullname', widget=forms.TextInput(
+        attrs={'class': 'form-control fields', 'autocomplete': 'off',
                'placeholder': 'Fullname'}
     ))
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(
-        attrs={'class': 'fields', 'autocomplete': 'off',
-               'placeholder': 'Password'}
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(
+        attrs={'class': 'form-control fields', 'autocomplete': 'off', 'placeholder': 'Email'}
     ))
-    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(
-        attrs={'class': 'fields', 'autocomplete': 'off',
-               'placeholder': 'Confirm Password'}
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(
+        attrs={'class': 'form-control fields', 'autocomplete': 'off', 'id': 'password',
+               'placeholder': 'Password'}
     ))
 
     class meta:
-        fields = ['username', 'email', 'fullname', 'password1', 'password2']
+        fields = ['username', 'email', 'password', 'fullname']
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', widget=forms.TextInput(
-        attrs={'class': 'fields', 'autocomplete': 'off',
+        attrs={'class': 'form-control fields', 'autocomplete': 'off',
                'placeholder': 'Username'}
     ))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(
-        attrs={'class': 'fields', 'autocomplete': 'off',
+        attrs={'class': 'form-control fields', 'autocomplete': 'off', 'id': 'password',
                'placeholder': 'Password'}
     ))
 

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # custom apps
     'account',
     'questions',
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +121,7 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-EMAIL_HOST = 'smtp.sendgrid.net' 
+EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
