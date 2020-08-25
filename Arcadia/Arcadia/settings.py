@@ -1,6 +1,8 @@
 import os
 from decouple import config
 from datetime import datetime
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -109,6 +111,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+#Sentry Initialisation  
+sentry_sdk.init(
+    dsn="https://9f96d9d0e1bc4537b4419cc6908de61d@o418795.ingest.sentry.io/5404513",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate = 1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
