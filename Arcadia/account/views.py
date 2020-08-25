@@ -161,7 +161,7 @@ class ForgotPasswordView(View):
             return redirect('forgot_password')
         else:
             current_site = get_current_site(request)
-            subject = 'Programming Club-Reset Password'
+            subject = 'TMC-Arcadia Reset Password'
 
             context = {'user': user, 'domain': current_site.domain,
                        'encoded_username': urlsafe_base64_encode(force_bytes(user.username)),
