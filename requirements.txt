@@ -1,0 +1,9 @@
+asgiref==3.2.10
+certifi==2020.6.20
+Django==3.1
+Pillow==7.2.0
+python-decouple==3.3
+pytz==2020.1
+sentry-sdk==0.17.0
+sqlparse==0.3.1
+urllib3==1.25.10
