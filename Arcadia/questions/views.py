@@ -23,7 +23,7 @@ class QuestionView(LoginRequiredMixin, TemplateView):
         current_time = datetime.now()
 
         if not START_TIME <= current_time <= END_TIME:
-            messages.error(request, 'Biz-hunt is closed')
+            messages.error(request, 'Arcadia is closed')
             return redirect('home')
 
         if request.user.get_current_que() == (MAX_QUESTIONS + 1):
@@ -38,7 +38,7 @@ class QuestionView(LoginRequiredMixin, TemplateView):
         current_time = datetime.now()
 
         if not START_TIME <= current_time <= END_TIME:
-            messages.error(request, 'Biz-hunt is closed')
+            messages.error(request, 'Arcadia is closed')
             return redirect('home')
 
         question_no = request.user.get_current_que()
@@ -48,7 +48,7 @@ class QuestionView(LoginRequiredMixin, TemplateView):
 
         if not only_letters(answer):
             messages.error(
-                request, 'Answer should only contain lower-case alphabets!!')
+                request, 'Answer should only contain lower-case alphabets without spaces')
             return redirect('questions')
         if answer == question.Question_Answer:
             request.user.set_current_que()
