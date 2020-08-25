@@ -29,6 +29,7 @@ urlpatterns = [
 	path('', include('questions.urls')),
 	path('', include('home.urls')),
     path('sentry-debug/', trigger_error_for_sentry),
+	path('', include('about.urls')),
 ]
 
 if settings.DEBUG:

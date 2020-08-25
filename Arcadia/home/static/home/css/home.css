@@ -1,5 +1,10 @@
 body {
 	background-color: #b80b22;
+	background-image: none;
+}
+
+.home-main {
+	min-height: 80vh;
 }
 
 .image-box {
