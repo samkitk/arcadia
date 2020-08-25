@@ -20,6 +20,12 @@
             <li class="nav-item ">
                 <a class="nav-link nav-link-class" href="{% url 'leaderboard' %}">Leaderboard</a>
             </li>
+            <li class="nav-item ">
+                <a class="nav-link nav-link-class" href="{% url 'about' %}">About</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link nav-link-class" href="{% url 'event' %}">Past Events</a>
+            </li>
             {% if request.user.is_authenticated %}
             <li class="nav-item ">
                 <a class="nav-link nav-link-class" href="{% url 'logout' %}">Logout</a>
