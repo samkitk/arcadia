@@ -1,20 +1,15 @@
-.box {
-    max-width: 80%;
-    text-align: left;
+.heading {
+	margin-top: 30px;
+	border: 2px solid white;
+	color: white;
+	background-color: #b80b22;
+	width: 320px;
+	text-align: center;
+	font-size: 36px;
 }
 
-ol li {
-    color: #e6e8e6;
-    font-size: 20px;
+
+.instructions-box {
+	background-color: #b80b22;
 }
 
-@media screen and (max-width: 993px) {
-    .box {
-        margin: 0px;
-        min-width: 95%;
-        transform: translateX(0);
-    }
-    ol li {
-        font-size: 16px;
-    }
-}

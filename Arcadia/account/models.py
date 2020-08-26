@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
-DEFAULT_TIME = datetime(2020, 6, 13, 16, 0, 0)
+DEFAULT_TIME = datetime(2020, 8, 27, 16, 0, 0)
 
 
 class AccountManager(BaseUserManager):
@@ -87,13 +87,6 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return self.is_superuser
-
-    @property
-    def is_winner(self):
-        if(self.challenged_won.count() > 0):
-            return True
-        else: 
-            return False
 
 	# We can add custom methods as per requirements
 
