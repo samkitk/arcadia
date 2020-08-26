@@ -141,5 +141,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
  
 MAX_QUESTIONS = 15
-START_TIME =  datetime(2020, 6, 22, 13, 30, 0)
-END_TIME =  datetime(2020, 8, 25, 23, 30, 0)
+START_TIME =  datetime(2020, 8, 26, 15, 15, 0)
+END_TIME =  datetime(2020, 8, 26, 15, 45, 0)
