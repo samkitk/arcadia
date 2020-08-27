@@ -62,7 +62,7 @@ class Account(AbstractBaseUser):
     username = models.CharField(unique=True, max_length=220)
     email = models.EmailField()
     fullname = models.CharField(max_length=220, blank=True, null=True)
-    current_que = models.IntegerField(default=-3)
+    current_que = models.IntegerField(default=-1)
     last_ans_time = models.TimeField(default=DEFAULT_TIME)
     # required_fields
     is_active = models.BooleanField(default=True)
